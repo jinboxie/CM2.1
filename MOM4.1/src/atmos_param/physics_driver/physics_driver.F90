@@ -2124,7 +2124,8 @@ real,  dimension(:,:,:), intent(out)  ,optional :: diffm, difft
                            p_full, p_half, z_full, z_half,          &
                            um, vm, tm, qm, rm(:,:,:,1:ntp), &
                            udt, vdt, tdt, qdt, rdt,&
-                           z_pbl , mask=mask, kbot=kbot)
+                           z_pbl , mask=mask, kbot=kbot,             &
+                           frac_land=frac_land, t_surf=t_surf_rad)
      call mpp_clock_end ( damping_clock )
 
 !---------------------------------------------------------------------

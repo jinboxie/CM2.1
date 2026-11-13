@@ -47,6 +47,7 @@ module damping_driver_mod
                               cg_drag_restart
  use    topo_drag_mod, only:  topo_drag_init, topo_drag, topo_drag_end, &
                               topo_drag_restart
+ use     oro_drag_mod, only:  oro_drag_init, oro_drag, oro_drag_end
  use          fms_mod, only:  file_exist, mpp_pe, mpp_root_pe, stdlog, &
                               write_version_number, &
                               open_namelist_file, error_mesg, &
@@ -72,10 +73,11 @@ module damping_driver_mod
    logical  :: do_mg_drag = .false.
    logical  :: do_cg_drag = .false.
    logical  :: do_topo_drag = .false.
+   logical  :: do_oro_drag  = .false.   ! E3SM/Xie et al. (2020) orographic drag
    logical  :: do_conserve_energy = .false.
 
    namelist /damping_driver_nml/  trayfric,   nlev_rayfric,  &
-                                  do_cg_drag, do_topo_drag, &
+                                  do_cg_drag, do_topo_drag, do_oro_drag, &
                                   do_mg_drag, do_conserve_energy
 
 !
@@ -134,7 +136,7 @@ contains
  subroutine damping_driver (is, js, lat, Time, delt, pfull, phalf, zfull, zhalf, &
                             u, v, t, q, r,  udt, vdt, tdt, qdt, rdt,  &
 !                                   mask, kbot)
-                            z_pbl,  mask, kbot)
+                            z_pbl,  mask, kbot, frac_land, t_surf)
  
 !-----------------------------------------------------------------------
  integer,         intent(in)                :: is, js
@@ -150,6 +152,7 @@ contains
  real, dimension(:,:), intent(in)           :: z_pbl
  real,    intent(in),    dimension(:,:,:), optional :: mask
  integer, intent(in),    dimension(:,:),   optional :: kbot
+ real,    intent(in),    dimension(:,:),   optional :: frac_land, t_surf
 
 !-----------------------------------------------------------------------
  real, dimension(size(udt,1),size(udt,2))             :: diag2
@@ -328,6 +331,26 @@ contains
           diag2 = cp_air/grav * sum(ttnd*pmass,3)
           used = send_data ( id_diss_heat_topo, diag2, Time, is, js )
      endif
+
+ endif
+
+!-----------------------------------------------------------------------
+!--------- orographic drag (Xie et al. 2020 / E3SM od_common) ----------
+!-----------------------------------------------------------------------
+ if (do_oro_drag) then
+
+     if (.not.(present(frac_land) .and. present(t_surf)))             &
+        call error_mesg ('damping_driver', 'do_oro_drag needs '//     &
+                         'frac_land and t_surf arguments', FATAL)
+
+     call oro_drag (is, js, Time, delt, pfull, phalf, zfull, zhalf,  &
+                    u, v, t, q, z_pbl, frac_land, t_surf,            &
+                    utnd, vtnd, ttnd)
+
+     udt = udt + utnd
+     vdt = vdt + vtnd
+     tdt = tdt + ttnd
+     ! diagnostics are sent from oro_drag_mod (module name 'oro_drag')
 
  endif
 
@@ -539,6 +562,14 @@ endif
 
 
 !-----------------------------------------------------------------------
+!----- orographic drag (Xie et al. 2020 / E3SM od_common) -----
+
+  if (do_oro_drag) then
+     call oro_drag_init (lonb, latb, pref, axes, Time)
+     if (.not.(do_mg_drag .or. do_topo_drag)) sgsmtn(:,:) = -99999.
+  endif
+
+!-----------------------------------------------------------------------
 
    module_is_initialized =.true.
 
@@ -581,6 +612,7 @@ end subroutine damping_driver_endts
      if (do_mg_drag)   call mg_drag_end
      if (do_cg_drag)   call cg_drag_end
      if (do_topo_drag) call topo_drag_end
+     if (do_oro_drag)  call oro_drag_end
 
      module_is_initialized =.false.
 
