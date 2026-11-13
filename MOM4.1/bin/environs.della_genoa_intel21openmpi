@@ -1,0 +1,25 @@
+source /usr/share/Modules/init/csh
+
+module purge
+#module load intel/18.0/64/18.0.1.163
+#module load intel/18.0/64/18.0.3.222 # WY: 18.0.1.163 became unavailable on Jun 13, 2018
+#module load intel-mpi/intel/2018.1/64
+#module load intel-mpi/intel/2018.3/64 # WY: 2018.1/64 became unavailable on Jun 13, 2018
+#module load hdf5/intel-16.0/intel-mpi/1.8.16
+#module load netcdf/intel-16.0/hdf5-1.8.16/intel-mpi/4.4.0
+
+module load intel/2021.1.2
+#module load intel-mpi/intel/2021.7.0
+module load openmpi/intel-2021.1/4.1.0
+#module load hdf5/intel-2021.1/intel-mpi/1.10.6
+#module load hdf5/intel-2021.1/openmpi-4.1.0/1.10.6
+module load hdf5/intel-2021.1/1.10.6
+#module load netcdf/intel-2021.1/hdf5-1.10.6/intel-mpi/4.7.4
+#module load netcdf/intel-2021.1/hdf5-1.10.6/openmpi-4.1.0/4.7.4
+module load netcdf/intel-2021.1/hdf5-1.10.6/4.7.4 
+#WY: using openmpi-enabled hdf5/netcdf causes building errors in the final step:
+#/usr/local/netcdf/intel-2021.1/hdf5-1.10.6/openmpi-4.1.0/4.7.4/lib64/libnetcdf.so: undefined reference to `H5Pset_dxpl_mpio'
+#/usr/local/netcdf/intel-2021.1/hdf5-1.10.6/openmpi-4.1.0/4.7.4/lib64/libnetcdf.so: undefined reference to `H5Pset_fapl_mpio'
+#/usr/local/netcdf/intel-2021.1/hdf5-1.10.6/openmpi-4.1.0/4.7.4/lib64/libnetcdf.so: undefined reference to `H5Pset_all_coll_metadata_ops'
+#/usr/local/netcdf/intel-2021.1/hdf5-1.10.6/openmpi-4.1.0/4.7.4/lib64/libnetcdf.so: undefined reference to `H5Pset_coll_metadata_write'
+#make: *** [Make_CM2.1p1_dynamic:2450: fms_CM2.1p1_dynamic.x] Error 1
