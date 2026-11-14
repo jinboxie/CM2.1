@@ -1,0 +1,575 @@
+set thisdir = /home/wenchang/CM2.1/exp/test/test_CTL1990_110PE
+set thisfile = `ls test_run_*PE`
+ls test_run_CM2.1p1_CTL1860_110PE
+set cont_scrpt = /home/wenchang/CM2.1/exp/test/test_CTL1990_110PE/test_run_CM2.1p1_CTL1860_110PE
+set platform = tiger3_intelmpi_24
+set model_type = CM2.1
+set mom_version = p1
+set model_name = CM2.1
+set RootMOM = /scratch/gpfs/GEOCLIM/wenchang/tiger3/MOM4.1
+set model_executable = /scratch/gpfs/GEOCLIM/wenchang/tiger3/MOM4.1/exec_tiger3_intelmpi_24/CM2.1p1_dynamic/fms_CM2.1p1_dynamic.x
+set Root = /scratch/gpfs/GEOCLIM/wenchang/tiger3/CM2.1
+set npes = 110
+set expname = test_CTL1860_tiger3_intelmpi_24_110PE
+set workdir = /scratch/gpfs/GEOCLIM/wenchang/tiger3/CM2.1/work/test_CTL1860_tiger3_intelmpi_24_110PE
+set num_executions = 1
+set stop_date = 00040101
+set namelist = /home/wenchang/CM2.1/exp/test/test_CTL1990_110PE/CM2.1_namelists_CTL1860_110PE
+set diagtable = /scratch/gpfs/GEOCLIM/wenchang/tiger3/CM2.1/exp/CM2.1_diag_table_wy
+set fieldtable = /scratch/gpfs/GEOCLIM/wenchang/tiger3/CM2.1/exp/CM2.1_field_table
+set datatable = /scratch/gpfs/GEOCLIM/wenchang/tiger3/CM2.1/exp/CM2.1_data_table
+set input_data_dir = /scratch/gpfs/GEOCLIM/wenchang/modelInput/CM2.1/input_v2025
+set initCond_dir = /scratch/gpfs/GEOCLIM/wenchang/modelInput/CM2.1/initcond_wy/CTL1860_v202410_tigercpu_intelmpi_18_80PE/20010101_nocal
+set time_stamp = /scratch/gpfs/GEOCLIM/wenchang/tiger3/MOM4.1/bin/time_stamp.csh
+set mppnccombine = /scratch/gpfs/GEOCLIM/wenchang/tiger3/MOM4.1/bin/mppnccombine.tiger3_intelmpi_24
+source /scratch/gpfs/GEOCLIM/wenchang/tiger3/MOM4.1/bin/environs.tiger3_intelmpi_24
+source /usr/share/Modules/init/csh
+eval `/usr/bin/tclsh '/usr/share/Modules/libexec/modulecmd.tcl' csh autoinit`
+/usr/bin/tclsh /usr/share/Modules/libexec/modulecmd.tcl csh autoinit
+if ( 0 && 0 ) alias module set _histchars = $histchars; unset histchars; set _prompt=$prompt:q; set prompt=""; eval "`/usr/bin/tclsh '/usr/share/Modules/libexec/modulecmd.tcl' csh !*:q`"; set _exit="$status"; set histchars = $_histchars; unset _histchars; set prompt=$_prompt:q; unset _prompt; test 0 = $_exit
+if ( 0 && ! 0 ) alias module set _histchars = $histchars; unset histchars; eval "`/usr/bin/tclsh '/usr/share/Modules/libexec/modulecmd.tcl' csh !*:q`"; set _exit="$status"; set histchars = $_histchars; unset _histchars; test 0 = $_exit
+if ( ! 0 && 0 ) alias module set _prompt=$prompt:q; set prompt=""; eval "`/usr/bin/tclsh '/usr/share/Modules/libexec/modulecmd.tcl' csh !*:q`"; set _exit="$status"; set prompt=$_prompt:q; unset _prompt; test 0 = $_exit
+if ( ! 0 && ! 0 ) alias module eval "`/usr/bin/tclsh '/usr/share/Modules/libexec/modulecmd.tcl' csh !*:q`";
+alias module eval "`/usr/bin/tclsh '/usr/share/Modules/libexec/modulecmd.tcl' csh !*:q`";
+alias ml module ml !*
+setenv MODULES_CMD /usr/share/Modules/libexec/modulecmd.tcl
+unsetenv __MODULES_AUTOINIT_INPROGRESS
+setenv MODULESHOME /usr/share/Modules
+alias conda source $_CONDA_ROOT/etc/profile.d/conda.csh
+test 0
+eval `/usr/bin/tclsh '/usr/share/Modules/libexec/modulecmd.tcl' csh purge`
+/usr/bin/tclsh /usr/share/Modules/libexec/modulecmd.tcl csh purge
+unsetenv CONDA_SHLVL
+unsetenv _CONDA_EXE
+setenv PATH /home/GEOCLIM/software/anaconda3/2024.10/envs/geoclim/bin:/scratch/gpfs/GEOCLIM/local/bin:/tigress/wenchang/miniconda3/bin:/tigress/wenchang/bin:/scratch/gpfs/GEOCLIM/wenchang/mkmf/bin:/tigress/wenchang/FRE-NCtools/build/tigercpu_intelmpi_18/princeton/bin:/tigress/wenchang/my_cesm_sandbox/cime/scripts:/tigress/wenchang/bin:/home/wenchang/.local/bin:/home/wenchang/bin:/projects/GEOCLIM/software/common/bin:/usr/share/Modules/bin:/usr/local/bin:/usr/bin:/usr/local/sbin:/usr/sbin:/opt/puppetlabs/bin:/opt/dell/srvadmin/bin
+unsetenv _LMFILES_
+unsetenv LOADEDMODULES
+unsetenv __MODULES_LMREFRESH
+unsetenv CONDA_EXE
+setenv GSETTINGS_SCHEMA_DIR /home/GEOCLIM/software/anaconda3/2024.10/envs/geoclim/share/glib-2.0/schemas
+unsetenv _CONDA_ROOT
+unsetenv CONDA_PYTHON_EXE
+unalias conda
+test 0
+eval `/usr/bin/tclsh '/usr/share/Modules/libexec/modulecmd.tcl' csh load intel-oneapi/2024.2`
+/usr/bin/tclsh /usr/share/Modules/libexec/modulecmd.tcl csh load intel-oneapi/2024.2
+Loading intel-oneapi/2024.2
+  Loading requirement: intel-tbb/2021.13 intel-rt/2024.2
+setenv OCL_ICD_FILENAMES /opt/intel/oneapi/compiler/2024.2/lib/libintelocl.so
+setenv CPATH /opt/intel/oneapi/tbb/2021.13/include
+setenv LD_LIBRARY_PATH /opt/intel/oneapi/compiler/2024.2/opt/compiler/lib:/opt/intel/oneapi/compiler/2024.2/lib:/opt/intel/oneapi/tbb/2021.13/lib
+setenv MANPATH /opt/intel/oneapi/compiler/2024.2/share/man:/usr/share/man:/usr/local/share/man:/opt/puppetlabs/puppet/share/man
+setenv LIBRARY_PATH /opt/intel/oneapi/compiler/2024.2/lib:/opt/intel/oneapi/tbb/2021.13/lib
+setenv CMPLR_ROOT /opt/intel/oneapi/compiler/2024.2
+setenv CMAKE_PREFIX_PATH /opt/intel/oneapi/compiler/2024.2:/opt/intel/oneapi/tbb/2021.13
+setenv LOADEDMODULES intel-tbb/2021.13:intel-rt/2024.2:intel-oneapi/2024.2
+setenv _LMFILES_ /opt/share/Modules/modulefiles/intel-tbb/2021.13:/opt/share/Modules/modulefiles/intel-rt/2024.2:/opt/share/Modules/modulefiles/intel-oneapi/2024.2
+setenv PKG_CONFIG_PATH /opt/intel/oneapi/compiler/2024.2/lib/pkgconfig:/opt/intel/oneapi/tbb/2021.13/lib/pkgconfig
+setenv __MODULES_LMTAG intel-tbb/2021.13&auto-loaded:intel-rt/2024.2&auto-loaded
+setenv TBBROOT /opt/intel/oneapi/tbb/2021.13
+unsetenv INTEL_TARGET_ARCH_IA32
+setenv __MODULES_LMPREREQ intel-oneapi/2024.2&intel-tbb/2021.13&intel-rt/2024.2
+setenv __MODULES_SHARE_DIAGUTIL_PATH /opt/intel/oneapi/compiler/2024.2/etc/compiler/sys_check/sys_check.sh:2
+setenv NLSPATH /opt/intel/oneapi/compiler/2024.2/lib/compiler/locale/%l_%t/%N
+setenv PATH /opt/intel/oneapi/compiler/2024.2/bin:/home/GEOCLIM/software/anaconda3/2024.10/envs/geoclim/bin:/scratch/gpfs/GEOCLIM/local/bin:/tigress/wenchang/miniconda3/bin:/tigress/wenchang/bin:/scratch/gpfs/GEOCLIM/wenchang/mkmf/bin:/tigress/wenchang/FRE-NCtools/build/tigercpu_intelmpi_18/princeton/bin:/tigress/wenchang/my_cesm_sandbox/cime/scripts:/tigress/wenchang/bin:/home/wenchang/.local/bin:/home/wenchang/bin:/projects/GEOCLIM/software/common/bin:/usr/share/Modules/bin:/usr/local/bin:/usr/bin:/usr/local/sbin:/usr/sbin:/opt/puppetlabs/bin:/opt/dell/srvadmin/bin
+setenv DIAGUTIL_PATH /opt/intel/oneapi/compiler/2024.2/etc/compiler/sys_check/sys_check.sh
+test 0
+eval `/usr/bin/tclsh '/usr/share/Modules/libexec/modulecmd.tcl' csh load intel-mpi/oneapi/2021.13`
+/usr/bin/tclsh /usr/share/Modules/libexec/modulecmd.tcl csh load intel-mpi/oneapi/2021.13
+setenv LD_LIBRARY_PATH /opt/intel/oneapi/mpi/2021.13/opt/mpi/libfabric/lib:/opt/intel/oneapi/mpi/2021.13/lib:/opt/intel/oneapi/compiler/2024.2/opt/compiler/lib:/opt/intel/oneapi/compiler/2024.2/lib:/opt/intel/oneapi/tbb/2021.13/lib
+setenv CPATH /opt/intel/oneapi/mpi/2021.13/include:/opt/intel/oneapi/tbb/2021.13/include
+setenv I_MPI_ROOT /opt/intel/oneapi/mpi/2021.13
+setenv LIBRARY_PATH /opt/intel/oneapi/mpi/2021.13/opt/mpi/libfabric/lib:/opt/intel/oneapi/mpi/2021.13/lib:/opt/intel/oneapi/compiler/2024.2/lib:/opt/intel/oneapi/tbb/2021.13/lib
+setenv MANPATH /opt/intel/oneapi/mpi/2021.13/share/man:/opt/intel/oneapi/compiler/2024.2/share/man:/usr/share/man:/usr/local/share/man:/opt/puppetlabs/puppet/share/man
+setenv SLURM_MPI_TYPE pmi2
+setenv _LMFILES_ /opt/share/Modules/modulefiles/intel-tbb/2021.13:/opt/share/Modules/modulefiles/intel-rt/2024.2:/opt/share/Modules/modulefiles/intel-oneapi/2024.2:/opt/share/Modules/modulefiles/intel-mpi/oneapi/2021.13
+setenv LOADEDMODULES intel-tbb/2021.13:intel-rt/2024.2:intel-oneapi/2024.2:intel-mpi/oneapi/2021.13
+setenv I_MPI_HYDRA_BOOTSTRAP slurm
+setenv MPICH_CXX icpx
+setenv __MODULES_LMPREREQ intel-oneapi/2024.2&intel-tbb/2021.13&intel-rt/2024.2:intel-mpi/oneapi/2021.13&intel-oneapi
+setenv MPICH_F90 ifx
+setenv __MODULES_LMCONFLICT intel-mpi/oneapi/2021.13&intel-mpi&openmpi&mpich&mvapich
+setenv MPICH_FC ifx
+setenv CLASSPATH /opt/intel/oneapi/mpi/2021.13/share/java/mpi.jar
+setenv MPICH_F77 ifx
+setenv PATH /opt/intel/oneapi/mpi/2021.13/opt/mpi/libfabric/bin:/opt/intel/oneapi/mpi/2021.13/bin:/opt/intel/oneapi/compiler/2024.2/bin:/home/GEOCLIM/software/anaconda3/2024.10/envs/geoclim/bin:/scratch/gpfs/GEOCLIM/local/bin:/tigress/wenchang/miniconda3/bin:/tigress/wenchang/bin:/scratch/gpfs/GEOCLIM/wenchang/mkmf/bin:/tigress/wenchang/FRE-NCtools/build/tigercpu_intelmpi_18/princeton/bin:/tigress/wenchang/my_cesm_sandbox/cime/scripts:/tigress/wenchang/bin:/home/wenchang/.local/bin:/home/wenchang/bin:/projects/GEOCLIM/software/common/bin:/usr/share/Modules/bin:/usr/local/bin:/usr/bin:/usr/local/sbin:/usr/sbin:/opt/puppetlabs/bin:/opt/dell/srvadmin/bin
+setenv FI_PROVIDER_PATH /opt/intel/oneapi/mpi/2021.13/opt/mpi/libfabric/lib/prov:/usr/lib64/libfabric
+setenv MPICH_CC icx
+setenv I_MPI_PMI_LIBRARY /usr/lib64/libpmi2.so
+test 0
+eval `/usr/bin/tclsh '/usr/share/Modules/libexec/modulecmd.tcl' csh load netcdf/oneapi-2024.2/hdf5-1.14.4/intel-mpi/4.9.2`
+/usr/bin/tclsh /usr/share/Modules/libexec/modulecmd.tcl csh load netcdf/oneapi-2024.2/hdf5-1.14.4/intel-mpi/4.9.2
+setenv LD_LIBRARY_PATH /usr/local/netcdf/oneapi-2024.2/hdf5-1.14.4/intel-mpi/4.9.2/lib64:/opt/intel/oneapi/mpi/2021.13/opt/mpi/libfabric/lib:/opt/intel/oneapi/mpi/2021.13/lib:/opt/intel/oneapi/compiler/2024.2/opt/compiler/lib:/opt/intel/oneapi/compiler/2024.2/lib:/opt/intel/oneapi/tbb/2021.13/lib
+setenv CPATH /opt/intel/oneapi/mpi/2021.13/include:/opt/intel/oneapi/tbb/2021.13/include:/usr/local/netcdf/oneapi-2024.2/hdf5-1.14.4/intel-mpi/4.9.2/include
+setenv LIBRARY_PATH /usr/local/netcdf/oneapi-2024.2/hdf5-1.14.4/intel-mpi/4.9.2/lib64:/opt/intel/oneapi/mpi/2021.13/opt/mpi/libfabric/lib:/opt/intel/oneapi/mpi/2021.13/lib:/opt/intel/oneapi/compiler/2024.2/lib:/opt/intel/oneapi/tbb/2021.13/lib
+setenv MANPATH /usr/local/netcdf/oneapi-2024.2/hdf5-1.14.4/intel-mpi/4.9.2/share/man:/opt/intel/oneapi/mpi/2021.13/share/man:/opt/intel/oneapi/compiler/2024.2/share/man:/usr/share/man:/usr/local/share/man:/opt/puppetlabs/puppet/share/man
+setenv _LMFILES_ /opt/share/Modules/modulefiles/intel-tbb/2021.13:/opt/share/Modules/modulefiles/intel-rt/2024.2:/opt/share/Modules/modulefiles/intel-oneapi/2024.2:/opt/share/Modules/modulefiles/intel-mpi/oneapi/2021.13:/usr/local/share/Modules/modulefiles/netcdf/oneapi-2024.2/hdf5-1.14.4/intel-mpi/4.9.2
+setenv LOADEDMODULES intel-tbb/2021.13:intel-rt/2024.2:intel-oneapi/2024.2:intel-mpi/oneapi/2021.13:netcdf/oneapi-2024.2/hdf5-1.14.4/intel-mpi/4.9.2
+setenv LOCAL_CXXFLAGS -I/usr/local/netcdf/oneapi-2024.2/hdf5-1.14.4/intel-mpi/4.9.2/include
+setenv LOCAL_CFLAGS -I/usr/local/netcdf/oneapi-2024.2/hdf5-1.14.4/intel-mpi/4.9.2/include
+setenv PKG_CONFIG_PATH /usr/local/netcdf/oneapi-2024.2/hdf5-1.14.4/intel-mpi/4.9.2/lib64/pkgconfig:/opt/intel/oneapi/compiler/2024.2/lib/pkgconfig:/opt/intel/oneapi/tbb/2021.13/lib/pkgconfig
+setenv INCLUDE -I/usr/local/netcdf/oneapi-2024.2/hdf5-1.14.4/intel-mpi/4.9.2/include
+setenv LDFLAGS -L/usr/local/netcdf/oneapi-2024.2/hdf5-1.14.4/intel-mpi/4.9.2/lib64
+setenv __MODULES_LMPREREQ intel-oneapi/2024.2&intel-tbb/2021.13&intel-rt/2024.2:intel-mpi/oneapi/2021.13&intel-oneapi:netcdf/oneapi-2024.2/hdf5-1.14.4/intel-mpi/4.9.2&hdf5|intel-oneapi|intel-mpi
+setenv LOCAL_INCLUDE -I/usr/local/netcdf/oneapi-2024.2/hdf5-1.14.4/intel-mpi/4.9.2/include
+setenv LOCAL_LDFLAGS -L/usr/local/netcdf/oneapi-2024.2/hdf5-1.14.4/intel-mpi/4.9.2/lib64
+setenv __MODULES_LMCONFLICT intel-mpi/oneapi/2021.13&intel-mpi&openmpi&mpich&mvapich:netcdf/oneapi-2024.2/hdf5-1.14.4/intel-mpi/4.9.2&netcdf
+setenv NETCDFDIR /usr/local/netcdf/oneapi-2024.2/hdf5-1.14.4/intel-mpi/4.9.2
+setenv FFLAGS -I/usr/local/netcdf/oneapi-2024.2/hdf5-1.14.4/intel-mpi/4.9.2/include
+setenv LOCAL_FFLAGS -I/usr/local/netcdf/oneapi-2024.2/hdf5-1.14.4/intel-mpi/4.9.2/include
+setenv PATH /usr/local/netcdf/oneapi-2024.2/hdf5-1.14.4/intel-mpi/4.9.2/bin:/opt/intel/oneapi/mpi/2021.13/opt/mpi/libfabric/bin:/opt/intel/oneapi/mpi/2021.13/bin:/opt/intel/oneapi/compiler/2024.2/bin:/home/GEOCLIM/software/anaconda3/2024.10/envs/geoclim/bin:/scratch/gpfs/GEOCLIM/local/bin:/tigress/wenchang/miniconda3/bin:/tigress/wenchang/bin:/scratch/gpfs/GEOCLIM/wenchang/mkmf/bin:/tigress/wenchang/FRE-NCtools/build/tigercpu_intelmpi_18/princeton/bin:/tigress/wenchang/my_cesm_sandbox/cime/scripts:/tigress/wenchang/bin:/home/wenchang/.local/bin:/home/wenchang/bin:/projects/GEOCLIM/software/common/bin:/usr/share/Modules/bin:/usr/local/bin:/usr/bin:/usr/local/sbin:/usr/sbin:/opt/puppetlabs/bin:/opt/dell/srvadmin/bin
+test 0
+eval `/usr/bin/tclsh '/usr/share/Modules/libexec/modulecmd.tcl' csh load hdf5/oneapi-2024.2/intel-mpi/1.14.4`
+/usr/bin/tclsh /usr/share/Modules/libexec/modulecmd.tcl csh load hdf5/oneapi-2024.2/intel-mpi/1.14.4
+Loading hdf5/oneapi-2024.2/intel-mpi/1.14.4
+  Unloading dependent: netcdf/oneapi-2024.2/hdf5-1.14.4/intel-mpi/4.9.2
+  Reloading dependent: netcdf/oneapi-2024.2/hdf5-1.14.4/intel-mpi/4.9.2
+setenv LD_LIBRARY_PATH /usr/local/netcdf/oneapi-2024.2/hdf5-1.14.4/intel-mpi/4.9.2/lib64:/usr/local/hdf5/oneapi-2024.2/intel-mpi/1.14.4/lib64:/opt/intel/oneapi/mpi/2021.13/opt/mpi/libfabric/lib:/opt/intel/oneapi/mpi/2021.13/lib:/opt/intel/oneapi/compiler/2024.2/opt/compiler/lib:/opt/intel/oneapi/compiler/2024.2/lib:/opt/intel/oneapi/tbb/2021.13/lib
+setenv CPATH /opt/intel/oneapi/mpi/2021.13/include:/opt/intel/oneapi/tbb/2021.13/include:/usr/local/hdf5/oneapi-2024.2/intel-mpi/1.14.4/include:/usr/local/netcdf/oneapi-2024.2/hdf5-1.14.4/intel-mpi/4.9.2/include
+setenv LIBRARY_PATH /usr/local/netcdf/oneapi-2024.2/hdf5-1.14.4/intel-mpi/4.9.2/lib64:/usr/local/hdf5/oneapi-2024.2/intel-mpi/1.14.4/lib64:/opt/intel/oneapi/mpi/2021.13/opt/mpi/libfabric/lib:/opt/intel/oneapi/mpi/2021.13/lib:/opt/intel/oneapi/compiler/2024.2/lib:/opt/intel/oneapi/tbb/2021.13/lib
+setenv MANPATH /usr/local/netcdf/oneapi-2024.2/hdf5-1.14.4/intel-mpi/4.9.2/share/man:/usr/local/hdf5/oneapi-2024.2/intel-mpi/1.14.4/share/man:/opt/intel/oneapi/mpi/2021.13/share/man:/opt/intel/oneapi/compiler/2024.2/share/man:/usr/share/man:/usr/local/share/man:/opt/puppetlabs/puppet/share/man
+setenv _LMFILES_ /opt/share/Modules/modulefiles/intel-tbb/2021.13:/opt/share/Modules/modulefiles/intel-rt/2024.2:/opt/share/Modules/modulefiles/intel-oneapi/2024.2:/opt/share/Modules/modulefiles/intel-mpi/oneapi/2021.13:/usr/local/share/Modules/modulefiles/hdf5/oneapi-2024.2/intel-mpi/1.14.4:/usr/local/share/Modules/modulefiles/netcdf/oneapi-2024.2/hdf5-1.14.4/intel-mpi/4.9.2
+setenv LOADEDMODULES intel-tbb/2021.13:intel-rt/2024.2:intel-oneapi/2024.2:intel-mpi/oneapi/2021.13:hdf5/oneapi-2024.2/intel-mpi/1.14.4:netcdf/oneapi-2024.2/hdf5-1.14.4/intel-mpi/4.9.2
+setenv LOCAL_CXXFLAGS -I/usr/local/hdf5/oneapi-2024.2/intel-mpi/1.14.4/include -I/usr/local/netcdf/oneapi-2024.2/hdf5-1.14.4/intel-mpi/4.9.2/include
+setenv LOCAL_CFLAGS -I/usr/local/hdf5/oneapi-2024.2/intel-mpi/1.14.4/include -I/usr/local/netcdf/oneapi-2024.2/hdf5-1.14.4/intel-mpi/4.9.2/include
+setenv PKG_CONFIG_PATH /usr/local/netcdf/oneapi-2024.2/hdf5-1.14.4/intel-mpi/4.9.2/lib64/pkgconfig:/opt/intel/oneapi/compiler/2024.2/lib/pkgconfig:/opt/intel/oneapi/tbb/2021.13/lib/pkgconfig
+setenv INCLUDE -I/usr/local/hdf5/oneapi-2024.2/intel-mpi/1.14.4/include -I/usr/local/netcdf/oneapi-2024.2/hdf5-1.14.4/intel-mpi/4.9.2/include
+setenv LDFLAGS -L/usr/local/hdf5/oneapi-2024.2/intel-mpi/1.14.4/lib64 -L/usr/local/netcdf/oneapi-2024.2/hdf5-1.14.4/intel-mpi/4.9.2/lib64
+setenv FCFLAGS -I/usr/local/hdf5/oneapi-2024.2/intel-mpi/1.14.4/include
+setenv HDF5DIR /usr/local/hdf5/oneapi-2024.2/intel-mpi/1.14.4
+setenv __MODULES_LMPREREQ intel-oneapi/2024.2&intel-tbb/2021.13&intel-rt/2024.2:intel-mpi/oneapi/2021.13&intel-oneapi:hdf5/oneapi-2024.2/intel-mpi/1.14.4&intel-mpi|intel-oneapi:netcdf/oneapi-2024.2/hdf5-1.14.4/intel-mpi/4.9.2&hdf5|intel-oneapi|intel-mpi
+setenv LOCAL_INCLUDE -I/usr/local/hdf5/oneapi-2024.2/intel-mpi/1.14.4/include -I/usr/local/netcdf/oneapi-2024.2/hdf5-1.14.4/intel-mpi/4.9.2/include
+setenv LOCAL_LDFLAGS -L/usr/local/hdf5/oneapi-2024.2/intel-mpi/1.14.4/lib64 -L/usr/local/netcdf/oneapi-2024.2/hdf5-1.14.4/intel-mpi/4.9.2/lib64
+setenv LOCAL_FCFLAGS -I/usr/local/hdf5/oneapi-2024.2/intel-mpi/1.14.4/include
+setenv __MODULES_LMCONFLICT intel-mpi/oneapi/2021.13&intel-mpi&openmpi&mpich&mvapich:hdf5/oneapi-2024.2/intel-mpi/1.14.4&hdf5:netcdf/oneapi-2024.2/hdf5-1.14.4/intel-mpi/4.9.2&netcdf
+setenv HDF5_ROOT /usr/local/hdf5/oneapi-2024.2/intel-mpi/1.14.4
+setenv NETCDFDIR /usr/local/netcdf/oneapi-2024.2/hdf5-1.14.4/intel-mpi/4.9.2
+setenv FFLAGS -I/usr/local/hdf5/oneapi-2024.2/intel-mpi/1.14.4/include -I/usr/local/netcdf/oneapi-2024.2/hdf5-1.14.4/intel-mpi/4.9.2/include
+setenv LOCAL_FFLAGS -I/usr/local/hdf5/oneapi-2024.2/intel-mpi/1.14.4/include -I/usr/local/netcdf/oneapi-2024.2/hdf5-1.14.4/intel-mpi/4.9.2/include
+setenv PATH /usr/local/netcdf/oneapi-2024.2/hdf5-1.14.4/intel-mpi/4.9.2/bin:/usr/local/hdf5/oneapi-2024.2/intel-mpi/1.14.4/bin:/opt/intel/oneapi/mpi/2021.13/opt/mpi/libfabric/bin:/opt/intel/oneapi/mpi/2021.13/bin:/opt/intel/oneapi/compiler/2024.2/bin:/home/GEOCLIM/software/anaconda3/2024.10/envs/geoclim/bin:/scratch/gpfs/GEOCLIM/local/bin:/tigress/wenchang/miniconda3/bin:/tigress/wenchang/bin:/scratch/gpfs/GEOCLIM/wenchang/mkmf/bin:/tigress/wenchang/FRE-NCtools/build/tigercpu_intelmpi_18/princeton/bin:/tigress/wenchang/my_cesm_sandbox/cime/scripts:/tigress/wenchang/bin:/home/wenchang/.local/bin:/home/wenchang/bin:/projects/GEOCLIM/software/common/bin:/usr/share/Modules/bin:/usr/local/bin:/usr/bin:/usr/local/sbin:/usr/sbin:/opt/puppetlabs/bin:/opt/dell/srvadmin/bin
+test 0
+eval `/usr/bin/tclsh '/usr/share/Modules/libexec/modulecmd.tcl' csh load intel-mkl/2024.2`
+/usr/bin/tclsh /usr/share/Modules/libexec/modulecmd.tcl csh load intel-mkl/2024.2
+setenv CPATH /opt/intel/oneapi/mkl/2024.2/include:/opt/intel/oneapi/mpi/2021.13/include:/opt/intel/oneapi/tbb/2021.13/include:/usr/local/hdf5/oneapi-2024.2/intel-mpi/1.14.4/include:/usr/local/netcdf/oneapi-2024.2/hdf5-1.14.4/intel-mpi/4.9.2/include
+setenv LD_LIBRARY_PATH /opt/intel/oneapi/mkl/2024.2/lib:/usr/local/netcdf/oneapi-2024.2/hdf5-1.14.4/intel-mpi/4.9.2/lib64:/usr/local/hdf5/oneapi-2024.2/intel-mpi/1.14.4/lib64:/opt/intel/oneapi/mpi/2021.13/opt/mpi/libfabric/lib:/opt/intel/oneapi/mpi/2021.13/lib:/opt/intel/oneapi/compiler/2024.2/opt/compiler/lib:/opt/intel/oneapi/compiler/2024.2/lib:/opt/intel/oneapi/tbb/2021.13/lib
+setenv MKLROOT /opt/intel/oneapi/mkl/2024.2
+setenv LIBRARY_PATH /opt/intel/oneapi/mkl/2024.2/lib:/usr/local/netcdf/oneapi-2024.2/hdf5-1.14.4/intel-mpi/4.9.2/lib64:/usr/local/hdf5/oneapi-2024.2/intel-mpi/1.14.4/lib64:/opt/intel/oneapi/mpi/2021.13/opt/mpi/libfabric/lib:/opt/intel/oneapi/mpi/2021.13/lib:/opt/intel/oneapi/compiler/2024.2/lib:/opt/intel/oneapi/tbb/2021.13/lib
+setenv __MODULES_LMPREREQ intel-oneapi/2024.2&intel-tbb/2021.13&intel-rt/2024.2:intel-mpi/oneapi/2021.13&intel-oneapi:hdf5/oneapi-2024.2/intel-mpi/1.14.4&intel-mpi|intel-oneapi:netcdf/oneapi-2024.2/hdf5-1.14.4/intel-mpi/4.9.2&hdf5|intel-oneapi|intel-mpi:intel-mkl/2024.2&intel-tbb/2021.13&intel-rt/2024.2
+setenv _LMFILES_ /opt/share/Modules/modulefiles/intel-tbb/2021.13:/opt/share/Modules/modulefiles/intel-rt/2024.2:/opt/share/Modules/modulefiles/intel-oneapi/2024.2:/opt/share/Modules/modulefiles/intel-mpi/oneapi/2021.13:/usr/local/share/Modules/modulefiles/hdf5/oneapi-2024.2/intel-mpi/1.14.4:/usr/local/share/Modules/modulefiles/netcdf/oneapi-2024.2/hdf5-1.14.4/intel-mpi/4.9.2:/opt/share/Modules/modulefiles/intel-mkl/2024.2
+setenv LOADEDMODULES intel-tbb/2021.13:intel-rt/2024.2:intel-oneapi/2024.2:intel-mpi/oneapi/2021.13:hdf5/oneapi-2024.2/intel-mpi/1.14.4:netcdf/oneapi-2024.2/hdf5-1.14.4/intel-mpi/4.9.2:intel-mkl/2024.2
+setenv NLSPATH /opt/intel/oneapi/mkl/2024.2/share/locale/%l_%t/%N:/opt/intel/oneapi/compiler/2024.2/lib/compiler/locale/%l_%t/%N
+setenv CMAKE_PREFIX_PATH /opt/intel/oneapi/mkl/2024.2/lib/cmake:/opt/intel/oneapi/compiler/2024.2:/opt/intel/oneapi/tbb/2021.13
+setenv PKG_CONFIG_PATH /opt/intel/oneapi/mkl/2024.2/lib/pkgconfig:/usr/local/netcdf/oneapi-2024.2/hdf5-1.14.4/intel-mpi/4.9.2/lib64/pkgconfig:/opt/intel/oneapi/compiler/2024.2/lib/pkgconfig:/opt/intel/oneapi/tbb/2021.13/lib/pkgconfig
+test 0
+which mpiifort
+mpiifort: Command not found.
+which mpiicc
+mpiicc: Command not found.
+eval `/usr/bin/tclsh '/usr/share/Modules/libexec/modulecmd.tcl' csh list`
+/usr/bin/tclsh /usr/share/Modules/libexec/modulecmd.tcl csh list
+Currently Loaded Modulefiles:
+ 1) intel-tbb/2021.13 <aL>                             7) intel-mkl/2024.2  
+ 2) intel-rt/2024.2 <aL>                              
+ 3) intel-oneapi/2024.2                               
+ 4) intel-mpi/oneapi/2021.13                          
+ 5) hdf5/oneapi-2024.2/intel-mpi/1.14.4               
+ 6) netcdf/oneapi-2024.2/hdf5-1.14.4/intel-mpi/4.9.2  
+
+Key:
+<module-tag>  <aL>=auto-loaded  
+setenv MAIN_PROGRAM coupler_main.o
+if ( ! -d /scratch/gpfs/GEOCLIM/wenchang/tiger3/CM2.1/work/test_CTL1860_tiger3_intelmpi_24_110PE ) then
+mkdir -p /scratch/gpfs/GEOCLIM/wenchang/tiger3/CM2.1/work/test_CTL1860_tiger3_intelmpi_24_110PE
+endif
+if ( ! -e /home/wenchang/CM2.1/exp/test/test_CTL1990_110PE/work ) then
+ln -s /scratch/gpfs/GEOCLIM/wenchang/tiger3/CM2.1/work/test_CTL1860_tiger3_intelmpi_24_110PE /home/wenchang/CM2.1/exp/test/test_CTL1990_110PE/work
+endif
+cd /scratch/gpfs/GEOCLIM/wenchang/tiger3/CM2.1/work/test_CTL1860_tiger3_intelmpi_24_110PE
+foreach d ( INPUT RESTART ASCII POSTP HISTORY )
+if ( ! -d INPUT ) then
+mkdir INPUT
+endif
+end
+if ( ! -d RESTART ) then
+mkdir RESTART
+endif
+end
+if ( ! -d ASCII ) then
+mkdir ASCII
+endif
+end
+if ( ! -d POSTP ) then
+mkdir POSTP
+endif
+end
+if ( ! -d HISTORY ) then
+mkdir HISTORY
+endif
+end
+if ( ! -f input.nml ) then
+cp /home/wenchang/CM2.1/exp/test/test_CTL1990_110PE/CM2.1_namelists_CTL1860_110PE input.nml
+endif
+if ( ! -f diag_table ) then
+cp /scratch/gpfs/GEOCLIM/wenchang/tiger3/CM2.1/exp/CM2.1_diag_table_wy diag_table
+endif
+if ( ! -f field_table ) then
+cp /scratch/gpfs/GEOCLIM/wenchang/tiger3/CM2.1/exp/CM2.1_field_table field_table
+endif
+if ( ! -f data_table ) then
+cp /scratch/gpfs/GEOCLIM/wenchang/tiger3/CM2.1/exp/CM2.1_data_table data_table
+endif
+if ( ! -f fms_CM2.1p1_dynamic.x ) then
+ln -s /scratch/gpfs/GEOCLIM/wenchang/tiger3/MOM4.1/exec_tiger3_intelmpi_24/CM2.1p1_dynamic/fms_CM2.1p1_dynamic.x .
+endif
+cd /scratch/gpfs/GEOCLIM/wenchang/tiger3/CM2.1/work/test_CTL1860_tiger3_intelmpi_24_110PE/INPUT
+if ( ! -f coupler.res ) then
+ln -s /scratch/gpfs/GEOCLIM/wenchang/modelInput/CM2.1/input_v2025/aerosol.climatology.nc /scratch/gpfs/GEOCLIM/wenchang/modelInput/CM2.1/input_v2025/aerosol.optical.dat /scratch/gpfs/GEOCLIM/wenchang/modelInput/CM2.1/input_v2025/albedo.data.nc /scratch/gpfs/GEOCLIM/wenchang/modelInput/CM2.1/input_v2025/amip1_sst.data.nc /scratch/gpfs/GEOCLIM/wenchang/modelInput/CM2.1/input_v2025/annual_mean_ozone /scratch/gpfs/GEOCLIM/wenchang/modelInput/CM2.1/input_v2025/asmsw_data.nc /scratch/gpfs/GEOCLIM/wenchang/modelInput/CM2.1/input_v2025/atmos_hgrid.nc /scratch/gpfs/GEOCLIM/wenchang/modelInput/CM2.1/input_v2025/atmos_mosaic.nc /scratch/gpfs/GEOCLIM/wenchang/modelInput/CM2.1/input_v2025/atmos_mosaicXland_mosaic.nc /scratch/gpfs/GEOCLIM/wenchang/modelInput/CM2.1/input_v2025/atmos_mosaicXocean_mosaic.nc /scratch/gpfs/GEOCLIM/wenchang/modelInput/CM2.1/input_v2025/basin_mask.nc /scratch/gpfs/GEOCLIM/wenchang/modelInput/CM2.1/input_v2025/BetaDistributionTable.txt /scratch/gpfs/GEOCLIM/wenchang/modelInput/CM2.1/input_v2025/cfc.bc.nc /scratch/gpfs/GEOCLIM/wenchang/modelInput/CM2.1/input_v2025/ch4_gblannualdata /scratch/gpfs/GEOCLIM/wenchang/modelInput/CM2.1/input_v2025/chl.nc /scratch/gpfs/GEOCLIM/wenchang/modelInput/CM2.1/input_v2025/cns_0_10701200.nc /scratch/gpfs/GEOCLIM/wenchang/modelInput/CM2.1/input_v2025/cns_0_12001400.nc /scratch/gpfs/GEOCLIM/wenchang/modelInput/CM2.1/input_v2025/cns_0_43um.nc /scratch/gpfs/GEOCLIM/wenchang/modelInput/CM2.1/input_v2025/cns_0_490630.nc /scratch/gpfs/GEOCLIM/wenchang/modelInput/CM2.1/input_v2025/cns_0_490850.nc /scratch/gpfs/GEOCLIM/wenchang/modelInput/CM2.1/input_v2025/cns_0_560630.nc /scratch/gpfs/GEOCLIM/wenchang/modelInput/CM2.1/input_v2025/cns_0_630700.nc /scratch/gpfs/GEOCLIM/wenchang/modelInput/CM2.1/input_v2025/cns_0_700850.nc /scratch/gpfs/GEOCLIM/wenchang/modelInput/CM2.1/input_v2025/cns_1250_12001400.nc /scratch/gpfs/GEOCLIM/wenchang/modelInput/CM2.1/input_v2025/cns_1320_43um.nc /scratch/gpfs/GEOCLIM/wenchang/modelInput/CM2.1/input_v2025/cns_1320_490630.nc /scratch/gpfs/GEOCLIM/wenchang/modelInput/CM2.1/input_v2025/cns_1320_490850.nc /scratch/gpfs/GEOCLIM/wenchang/modelInput/CM2.1/input_v2025/cns_1320_630700.nc /scratch/gpfs/GEOCLIM/wenchang/modelInput/CM2.1/input_v2025/cns_1320_700850.nc /scratch/gpfs/GEOCLIM/wenchang/modelInput/CM2.1/input_v2025/cns_1600_43um /scratch/gpfs/GEOCLIM/wenchang/modelInput/CM2.1/input_v2025/cns_1600_490630 /scratch/gpfs/GEOCLIM/wenchang/modelInput/CM2.1/input_v2025/cns_1600_490670 /scratch/gpfs/GEOCLIM/wenchang/modelInput/CM2.1/input_v2025/cns_1600_490850 /scratch/gpfs/GEOCLIM/wenchang/modelInput/CM2.1/input_v2025/cns_1600_630700 /scratch/gpfs/GEOCLIM/wenchang/modelInput/CM2.1/input_v2025/cns_1600_670850 /scratch/gpfs/GEOCLIM/wenchang/modelInput/CM2.1/input_v2025/cns_1600_700850 /scratch/gpfs/GEOCLIM/wenchang/modelInput/CM2.1/input_v2025/cns_165_43um.nc /scratch/gpfs/GEOCLIM/wenchang/modelInput/CM2.1/input_v2025/cns_165_490630.nc /scratch/gpfs/GEOCLIM/wenchang/modelInput/CM2.1/input_v2025/cns_165_490850.nc /scratch/gpfs/GEOCLIM/wenchang/modelInput/CM2.1/input_v2025/cns_165_630700.nc /scratch/gpfs/GEOCLIM/wenchang/modelInput/CM2.1/input_v2025/cns_165_700850.nc /scratch/gpfs/GEOCLIM/wenchang/modelInput/CM2.1/input_v2025/cns_1750_12001400.nc /scratch/gpfs/GEOCLIM/wenchang/modelInput/CM2.1/input_v2025/cns_180_10701200.nc /scratch/gpfs/GEOCLIM/wenchang/modelInput/CM2.1/input_v2025/cns_180_12001400.nc /scratch/gpfs/GEOCLIM/wenchang/modelInput/CM2.1/input_v2025/cns_180_560630.nc /scratch/gpfs/GEOCLIM/wenchang/modelInput/CM2.1/input_v2025/cns_2250_12001400.nc /scratch/gpfs/GEOCLIM/wenchang/modelInput/CM2.1/input_v2025/cns_275_10701200.nc /scratch/gpfs/GEOCLIM/wenchang/modelInput/CM2.1/input_v2025/cns_275_12001400.nc /scratch/gpfs/GEOCLIM/wenchang/modelInput/CM2.1/input_v2025/cns_275_560630.nc /scratch/gpfs/GEOCLIM/wenchang/modelInput/CM2.1/input_v2025/cns_2800_12001400.nc /scratch/gpfs/GEOCLIM/wenchang/modelInput/CM2.1/input_v2025/cns_280_10701200.nc /scratch/gpfs/GEOCLIM/wenchang/modelInput/CM2.1/input_v2025/cns_280_12001400.nc /scratch/gpfs/GEOCLIM/wenchang/modelInput/CM2.1/input_v2025/cns_280_560630.nc /scratch/gpfs/GEOCLIM/wenchang/modelInput/CM2.1/input_v2025/cns_300_12001400.nc /scratch/gpfs/GEOCLIM/wenchang/modelInput/CM2.1/input_v2025/cns_300_43um.nc /scratch/gpfs/GEOCLIM/wenchang/modelInput/CM2.1/input_v2025/cns_300_490630.nc /scratch/gpfs/GEOCLIM/wenchang/modelInput/CM2.1/input_v2025/cns_300_490850.nc /scratch/gpfs/GEOCLIM/wenchang/modelInput/CM2.1/input_v2025/cns_300_630700.nc /scratch/gpfs/GEOCLIM/wenchang/modelInput/CM2.1/input_v2025/cns_300_700850.nc /scratch/gpfs/GEOCLIM/wenchang/modelInput/CM2.1/input_v2025/cns_310_10701200.nc /scratch/gpfs/GEOCLIM/wenchang/modelInput/CM2.1/input_v2025/cns_310_12001400.nc /scratch/gpfs/GEOCLIM/wenchang/modelInput/CM2.1/input_v2025/cns_310_560630.nc /scratch/gpfs/GEOCLIM/wenchang/modelInput/CM2.1/input_v2025/cns_330_43um.nc /scratch/gpfs/GEOCLIM/wenchang/modelInput/CM2.1/input_v2025/cns_330_490630.nc /scratch/gpfs/GEOCLIM/wenchang/modelInput/CM2.1/input_v2025/cns_330_490850.nc /scratch/gpfs/GEOCLIM/wenchang/modelInput/CM2.1/input_v2025/cns_330_630700.nc /scratch/gpfs/GEOCLIM/wenchang/modelInput/CM2.1/input_v2025/cns_330_700850.nc /scratch/gpfs/GEOCLIM/wenchang/modelInput/CM2.1/input_v2025/cns_340_10701200.nc /scratch/gpfs/GEOCLIM/wenchang/modelInput/CM2.1/input_v2025/cns_340_12001400.nc /scratch/gpfs/GEOCLIM/wenchang/modelInput/CM2.1/input_v2025/cns_340_560630.nc /scratch/gpfs/GEOCLIM/wenchang/modelInput/CM2.1/input_v2025/cns_348_43um.nc /scratch/gpfs/GEOCLIM/wenchang/modelInput/CM2.1/input_v2025/cns_348_490630.nc /scratch/gpfs/GEOCLIM/wenchang/modelInput/CM2.1/input_v2025/cns_348_490850.nc /scratch/gpfs/GEOCLIM/wenchang/modelInput/CM2.1/input_v2025/cns_348_630700.nc /scratch/gpfs/GEOCLIM/wenchang/modelInput/CM2.1/input_v2025/cns_348_700850.nc /scratch/gpfs/GEOCLIM/wenchang/modelInput/CM2.1/input_v2025/cns_356_43um.nc /scratch/gpfs/GEOCLIM/wenchang/modelInput/CM2.1/input_v2025/cns_356_490630.nc /scratch/gpfs/GEOCLIM/wenchang/modelInput/CM2.1/input_v2025/cns_356_490850.nc /scratch/gpfs/GEOCLIM/wenchang/modelInput/CM2.1/input_v2025/cns_356_630700.nc /scratch/gpfs/GEOCLIM/wenchang/modelInput/CM2.1/input_v2025/cns_356_700850.nc /scratch/gpfs/GEOCLIM/wenchang/modelInput/CM2.1/input_v2025/cns_360_43um.nc /scratch/gpfs/GEOCLIM/wenchang/modelInput/CM2.1/input_v2025/cns_360_490630.nc /scratch/gpfs/GEOCLIM/wenchang/modelInput/CM2.1/input_v2025/cns_360_490850.nc /scratch/gpfs/GEOCLIM/wenchang/modelInput/CM2.1/input_v2025/cns_360_630700.nc /scratch/gpfs/GEOCLIM/wenchang/modelInput/CM2.1/input_v2025/cns_360_700850.nc /scratch/gpfs/GEOCLIM/wenchang/modelInput/CM2.1/input_v2025/cns_375_10701200.nc /scratch/gpfs/GEOCLIM/wenchang/modelInput/CM2.1/input_v2025/cns_375_12001400.nc /scratch/gpfs/GEOCLIM/wenchang/modelInput/CM2.1/input_v2025/cns_375_560630.nc /scratch/gpfs/GEOCLIM/wenchang/modelInput/CM2.1/input_v2025/cns_4000_12001400.nc /scratch/gpfs/GEOCLIM/wenchang/modelInput/CM2.1/input_v2025/cns_500_10701200.nc /scratch/gpfs/GEOCLIM/wenchang/modelInput/CM2.1/input_v2025/cns_500_12001400.nc /scratch/gpfs/GEOCLIM/wenchang/modelInput/CM2.1/input_v2025/cns_500_560630.nc /scratch/gpfs/GEOCLIM/wenchang/modelInput/CM2.1/input_v2025/cns_600_43um.nc /scratch/gpfs/GEOCLIM/wenchang/modelInput/CM2.1/input_v2025/cns_600_490630.nc /scratch/gpfs/GEOCLIM/wenchang/modelInput/CM2.1/input_v2025/cns_600_490850.nc /scratch/gpfs/GEOCLIM/wenchang/modelInput/CM2.1/input_v2025/cns_600_630700.nc /scratch/gpfs/GEOCLIM/wenchang/modelInput/CM2.1/input_v2025/cns_600_700850.nc /scratch/gpfs/GEOCLIM/wenchang/modelInput/CM2.1/input_v2025/cns_660_43um.nc /scratch/gpfs/GEOCLIM/wenchang/modelInput/CM2.1/input_v2025/cns_660_490630.nc /scratch/gpfs/GEOCLIM/wenchang/modelInput/CM2.1/input_v2025/cns_660_490850.nc /scratch/gpfs/GEOCLIM/wenchang/modelInput/CM2.1/input_v2025/cns_660_630700.nc /scratch/gpfs/GEOCLIM/wenchang/modelInput/CM2.1/input_v2025/cns_660_700850.nc /scratch/gpfs/GEOCLIM/wenchang/modelInput/CM2.1/input_v2025/cns_700_12001400.nc /scratch/gpfs/GEOCLIM/wenchang/modelInput/CM2.1/input_v2025/co2_gblannualdata /scratch/gpfs/GEOCLIM/wenchang/modelInput/CM2.1/input_v2025/conc_all.nc /scratch/gpfs/GEOCLIM/wenchang/modelInput/CM2.1/input_v2025/cover_type_field /scratch/gpfs/GEOCLIM/wenchang/modelInput/CM2.1/input_v2025/cover_type_field.nc /scratch/gpfs/GEOCLIM/wenchang/modelInput/CM2.1/input_v2025/data_table /scratch/gpfs/GEOCLIM/wenchang/modelInput/CM2.1/input_v2025/diag_table /scratch/gpfs/GEOCLIM/wenchang/modelInput/CM2.1/input_v2025/eftsw4str /scratch/gpfs/GEOCLIM/wenchang/modelInput/CM2.1/input_v2025/emissions.ch3i.GEOS4x5.nc /scratch/gpfs/GEOCLIM/wenchang/modelInput/CM2.1/input_v2025/esf_sw_input_data_n38b18 /scratch/gpfs/GEOCLIM/wenchang/modelInput/CM2.1/input_v2025/esf_sw_input_data_n72b25 /scratch/gpfs/GEOCLIM/wenchang/modelInput/CM2.1/input_v2025/extlw_data.nc /scratch/gpfs/GEOCLIM/wenchang/modelInput/CM2.1/input_v2025/extsw_data.nc /scratch/gpfs/GEOCLIM/wenchang/modelInput/CM2.1/input_v2025/f113_gblannualdata /scratch/gpfs/GEOCLIM/wenchang/modelInput/CM2.1/input_v2025/f11_gblannualdata /scratch/gpfs/GEOCLIM/wenchang/modelInput/CM2.1/input_v2025/f12_gblannualdata /scratch/gpfs/GEOCLIM/wenchang/modelInput/CM2.1/input_v2025/f22_gblannualdata /scratch/gpfs/GEOCLIM/wenchang/modelInput/CM2.1/input_v2025/field_table /scratch/gpfs/GEOCLIM/wenchang/modelInput/CM2.1/input_v2025/grid_spec.nc /scratch/gpfs/GEOCLIM/wenchang/modelInput/CM2.1/input_v2025/ground_type_field /scratch/gpfs/GEOCLIM/wenchang/modelInput/CM2.1/input_v2025/groundwater_residence_time_field /scratch/gpfs/GEOCLIM/wenchang/modelInput/CM2.1/input_v2025/h2o12001400_hi00_data /scratch/gpfs/GEOCLIM/wenchang/modelInput/CM2.1/input_v2025/h2o12001400_hi92_data /scratch/gpfs/GEOCLIM/wenchang/modelInput/CM2.1/input_v2025/h2ockd2.1_corrdata /scratch/gpfs/GEOCLIM/wenchang/modelInput/CM2.1/input_v2025/h2ockd2.1_data /scratch/gpfs/GEOCLIM/wenchang/modelInput/CM2.1/input_v2025/h2ockd2.4_corrdata /scratch/gpfs/GEOCLIM/wenchang/modelInput/CM2.1/input_v2025/h2ocoeff_ckd_0_3000_10cm_hi00 /scratch/gpfs/GEOCLIM/wenchang/modelInput/CM2.1/input_v2025/h2ocoeff_ckd_speccombwidebds_hi00 /scratch/gpfs/GEOCLIM/wenchang/modelInput/CM2.1/input_v2025/h2ocoeff_ckd_speccombwidebds_hi92 /scratch/gpfs/GEOCLIM/wenchang/modelInput/CM2.1/input_v2025/h2ocoeff_rsb_0_3000_10cm_hi00 /scratch/gpfs/GEOCLIM/wenchang/modelInput/CM2.1/input_v2025/h2ocoeff_rsb_speccombwidebds_hi00 /scratch/gpfs/GEOCLIM/wenchang/modelInput/CM2.1/input_v2025/h2ocoeff_rsb_speccombwidebds_hi92 /scratch/gpfs/GEOCLIM/wenchang/modelInput/CM2.1/input_v2025/id1ch4n2 /scratch/gpfs/GEOCLIM/wenchang/modelInput/CM2.1/input_v2025/id1o3 /scratch/gpfs/GEOCLIM/wenchang/modelInput/CM2.1/input_v2025/id2h2obdckd2p1 /scratch/gpfs/GEOCLIM/wenchang/modelInput/CM2.1/input_v2025/id2h2obdfull /scratch/gpfs/GEOCLIM/wenchang/modelInput/CM2.1/input_v2025/id2h2orbts /scratch/gpfs/GEOCLIM/wenchang/modelInput/CM2.1/input_v2025/input.nml /scratch/gpfs/GEOCLIM/wenchang/modelInput/CM2.1/input_v2025/land_hgrid.nc /scratch/gpfs/GEOCLIM/wenchang/modelInput/CM2.1/input_v2025/land_mosaic.nc /scratch/gpfs/GEOCLIM/wenchang/modelInput/CM2.1/input_v2025/land_mosaicXocean_mosaic.nc /scratch/gpfs/GEOCLIM/wenchang/modelInput/CM2.1/input_v2025/lean_solar_spectral_data.dat /scratch/gpfs/GEOCLIM/wenchang/modelInput/CM2.1/input_v2025/mixdownslope_mask.nc /scratch/gpfs/GEOCLIM/wenchang/modelInput/CM2.1/input_v2025/n2o_gblannualdata /scratch/gpfs/GEOCLIM/wenchang/modelInput/CM2.1/input_v2025/navy_topography.data.nc /scratch/gpfs/GEOCLIM/wenchang/modelInput/CM2.1/input_v2025/o39001200_hi00_data /scratch/gpfs/GEOCLIM/wenchang/modelInput/CM2.1/input_v2025/o39001200_hi92_data /scratch/gpfs/GEOCLIM/wenchang/modelInput/CM2.1/input_v2025/o3.climatology.nc /scratch/gpfs/GEOCLIM/wenchang/modelInput/CM2.1/input_v2025/ocean_hgrid.nc /scratch/gpfs/GEOCLIM/wenchang/modelInput/CM2.1/input_v2025/ocean_mosaic.nc /scratch/gpfs/GEOCLIM/wenchang/modelInput/CM2.1/input_v2025/ocean_vgrid.nc /scratch/gpfs/GEOCLIM/wenchang/modelInput/CM2.1/input_v2025/omgsw_data.nc /scratch/gpfs/GEOCLIM/wenchang/modelInput/CM2.1/input_v2025/radfn_5-2995_100-490k /scratch/gpfs/GEOCLIM/wenchang/modelInput/CM2.1/input_v2025/randelo3data /scratch/gpfs/GEOCLIM/wenchang/modelInput/CM2.1/input_v2025/README_atmos2004 /scratch/gpfs/GEOCLIM/wenchang/modelInput/CM2.1/input_v2025/reynolds_sst.data.nc /scratch/gpfs/GEOCLIM/wenchang/modelInput/CM2.1/input_v2025/reyoi_sst.data.nc /scratch/gpfs/GEOCLIM/wenchang/modelInput/CM2.1/input_v2025/river_destination_field /scratch/gpfs/GEOCLIM/wenchang/modelInput/CM2.1/input_v2025/roughness_length.nc /scratch/gpfs/GEOCLIM/wenchang/modelInput/CM2.1/input_v2025/seasonal_ozone /scratch/gpfs/GEOCLIM/wenchang/modelInput/CM2.1/input_v2025/sst_ice_clim.nc /scratch/gpfs/GEOCLIM/wenchang/modelInput/CM2.1/input_v2025/stdlvls /scratch/gpfs/GEOCLIM/wenchang/modelInput/CM2.1/input_v2025/swstratendramadata /scratch/gpfs/GEOCLIM/wenchang/modelInput/CM2.1/input_v2025/tideamp.nc /scratch/gpfs/GEOCLIM/wenchang/modelInput/CM2.1/input_v2025/topog.nc /scratch/gpfs/GEOCLIM/wenchang/modelInput/CM2.1/input_v2025/wy_make_input_data_CM2.1.sh /scratch/gpfs/GEOCLIM/wenchang/modelInput/CM2.1/input_v2025/zonal_ozone_data.nc .
+ln -s /scratch/gpfs/GEOCLIM/wenchang/modelInput/CM2.1/initcond_wy/CTL1860_v202410_tigercpu_intelmpi_18_80PE/20010101_nocal/atmos_coupled.res.nc /scratch/gpfs/GEOCLIM/wenchang/modelInput/CM2.1/initcond_wy/CTL1860_v202410_tigercpu_intelmpi_18_80PE/20010101_nocal/atmos_tracers.res.nc /scratch/gpfs/GEOCLIM/wenchang/modelInput/CM2.1/initcond_wy/CTL1860_v202410_tigercpu_intelmpi_18_80PE/20010101_nocal/fv_rst.res.nc /scratch/gpfs/GEOCLIM/wenchang/modelInput/CM2.1/initcond_wy/CTL1860_v202410_tigercpu_intelmpi_18_80PE/20010101_nocal/fv_srf_wnd.res.nc /scratch/gpfs/GEOCLIM/wenchang/modelInput/CM2.1/initcond_wy/CTL1860_v202410_tigercpu_intelmpi_18_80PE/20010101_nocal/ice_model.res.nc /scratch/gpfs/GEOCLIM/wenchang/modelInput/CM2.1/initcond_wy/CTL1860_v202410_tigercpu_intelmpi_18_80PE/20010101_nocal/ice_ocmip2_cfc.res.nc /scratch/gpfs/GEOCLIM/wenchang/modelInput/CM2.1/initcond_wy/CTL1860_v202410_tigercpu_intelmpi_18_80PE/20010101_nocal/mg_drag.res.nc /scratch/gpfs/GEOCLIM/wenchang/modelInput/CM2.1/initcond_wy/CTL1860_v202410_tigercpu_intelmpi_18_80PE/20010101_nocal/ocean_age.res.nc /scratch/gpfs/GEOCLIM/wenchang/modelInput/CM2.1/initcond_wy/CTL1860_v202410_tigercpu_intelmpi_18_80PE/20010101_nocal/ocean_barotropic.res.nc /scratch/gpfs/GEOCLIM/wenchang/modelInput/CM2.1/initcond_wy/CTL1860_v202410_tigercpu_intelmpi_18_80PE/20010101_nocal/ocean_con_temp.res.nc /scratch/gpfs/GEOCLIM/wenchang/modelInput/CM2.1/initcond_wy/CTL1860_v202410_tigercpu_intelmpi_18_80PE/20010101_nocal/ocean_density.res.nc /scratch/gpfs/GEOCLIM/wenchang/modelInput/CM2.1/initcond_wy/CTL1860_v202410_tigercpu_intelmpi_18_80PE/20010101_nocal/ocean_frazil.res.nc /scratch/gpfs/GEOCLIM/wenchang/modelInput/CM2.1/initcond_wy/CTL1860_v202410_tigercpu_intelmpi_18_80PE/20010101_nocal/ocean_lap_friction.res.nc /scratch/gpfs/GEOCLIM/wenchang/modelInput/CM2.1/initcond_wy/CTL1860_v202410_tigercpu_intelmpi_18_80PE/20010101_nocal/ocean_neutral.res.nc /scratch/gpfs/GEOCLIM/wenchang/modelInput/CM2.1/initcond_wy/CTL1860_v202410_tigercpu_intelmpi_18_80PE/20010101_nocal/ocean_sbc.res.nc /scratch/gpfs/GEOCLIM/wenchang/modelInput/CM2.1/initcond_wy/CTL1860_v202410_tigercpu_intelmpi_18_80PE/20010101_nocal/ocean_sigma_transport.res.nc /scratch/gpfs/GEOCLIM/wenchang/modelInput/CM2.1/initcond_wy/CTL1860_v202410_tigercpu_intelmpi_18_80PE/20010101_nocal/ocean_temp_salt.res.nc /scratch/gpfs/GEOCLIM/wenchang/modelInput/CM2.1/initcond_wy/CTL1860_v202410_tigercpu_intelmpi_18_80PE/20010101_nocal/ocean_thickness.res.nc /scratch/gpfs/GEOCLIM/wenchang/modelInput/CM2.1/initcond_wy/CTL1860_v202410_tigercpu_intelmpi_18_80PE/20010101_nocal/ocean_tracer.res /scratch/gpfs/GEOCLIM/wenchang/modelInput/CM2.1/initcond_wy/CTL1860_v202410_tigercpu_intelmpi_18_80PE/20010101_nocal/ocean_velocity_advection.res.nc /scratch/gpfs/GEOCLIM/wenchang/modelInput/CM2.1/initcond_wy/CTL1860_v202410_tigercpu_intelmpi_18_80PE/20010101_nocal/ocean_velocity.res.nc /scratch/gpfs/GEOCLIM/wenchang/modelInput/CM2.1/initcond_wy/CTL1860_v202410_tigercpu_intelmpi_18_80PE/20010101_nocal/ocmip2_cfc_airsea_flux.res.nc /scratch/gpfs/GEOCLIM/wenchang/modelInput/CM2.1/initcond_wy/CTL1860_v202410_tigercpu_intelmpi_18_80PE/20010101_nocal/ocmip2_cfc.res.nc /scratch/gpfs/GEOCLIM/wenchang/modelInput/CM2.1/initcond_wy/CTL1860_v202410_tigercpu_intelmpi_18_80PE/20010101_nocal/physics_driver.res.nc /scratch/gpfs/GEOCLIM/wenchang/modelInput/CM2.1/initcond_wy/CTL1860_v202410_tigercpu_intelmpi_18_80PE/20010101_nocal/radiative_gases.res.nc /scratch/gpfs/GEOCLIM/wenchang/modelInput/CM2.1/initcond_wy/CTL1860_v202410_tigercpu_intelmpi_18_80PE/20010101_nocal/soil.res.nc /scratch/gpfs/GEOCLIM/wenchang/modelInput/CM2.1/initcond_wy/CTL1860_v202410_tigercpu_intelmpi_18_80PE/20010101_nocal/strat_cloud.res.nc /scratch/gpfs/GEOCLIM/wenchang/modelInput/CM2.1/initcond_wy/CTL1860_v202410_tigercpu_intelmpi_18_80PE/20010101_nocal/vegetation.res.nc /scratch/gpfs/GEOCLIM/wenchang/modelInput/CM2.1/initcond_wy/CTL1860_v202410_tigercpu_intelmpi_18_80PE/20010101_nocal/wy_make_initcond_CM2.1.sh /scratch/gpfs/GEOCLIM/wenchang/modelInput/CM2.1/initcond_wy/CTL1860_v202410_tigercpu_intelmpi_18_80PE/20010101_nocal/wyREADME .
+endif
+cd /scratch/gpfs/GEOCLIM/wenchang/tiger3/CM2.1/work/test_CTL1860_tiger3_intelmpi_24_110PE
+if ( -f ASCII/time_stamp.out ) then
+set date_name = 00010101
+set end_date_name = 00010101
+endif
+set irun = 1
+while ( 1 < = 1 )
+if ( 00010101 > = 00040101 ) then
+srun -n 110 ./fms_CM2.1p1_dynamic.x
+NOTE from PE    0: MPP_DOMAINS_SET_STACK_SIZE: stack size set to    32768.
+ &MPP_IO_NML
+ HEADER_BUFFER_VAL       =       16384,
+ GLOBAL_FIELD_ON_ROOT_PE = T,
+ IO_CLOCKS_ON    = F
+ /
+NOTE from PE    0: MPP_IO_SET_STACK_SIZE: stack size set to     131072.
+NOTE from PE    0: MPP_DOMAINS_SET_STACK_SIZE: stack size set to   130296.
+                                         Memuse(MB) at fms_init=  1.312E+02  1.408E+02  2.153E+00  1.357E+02
+NOTE from PE    0: coupler_init: Atmos PE range:      0    59 ens_01
+NOTE from PE    0: coupler_init: Ocean PE range:     60   109 ens_01
+NOTE from PE    0: coupler_init: Running with CONCURRENT coupling.
+NOTE from PE    0: coupler_init: Sending LAG fluxes to ocean.
+NOTE from PE   60: coupler_init: Atmos PE range:      0    59 ens_01
+NOTE from PE   60: coupler_init: Ocean PE range:     60   109 ens_01
+NOTE from PE   60: coupler_init: Running with CONCURRENT coupling.
+NOTE from PE   60: coupler_init: Sending LAG fluxes to ocean.
+                                Memuse(MB) at diag_manager_init=  1.359E+02  1.442E+02  1.716E+00  1.393E+02
+                                Memuse(MB) at diag_manager_init=  1.364E+02  1.452E+02  1.794E+00  1.413E+02
+ 
+ Dumping coupler_mod/types tree
+types/
+      air_sea_gas_flux_generic/
+                               implementation/
+                                              ocmip2/
+                                                     num_parameters = 2
+                               num_flags = 0
+                               use_atm_pressure = T
+                               use_10m_wind_speed = T
+                               pass_through_ice = F
+                               atm/
+                                   name[1] = 'pcair'
+                                   name[2] = 'u10'
+                                   name[3] = 'psurf'
+                                   long_name[1] = 'Atmospheric concentration'
+                                   long_name[2] = 'Wind speed at 10 m'
+                                   long_name[3] = 'Surface atmospheric pressure'
+                                   units[1] = 'mol/mol'
+                                   units[2] = 'm/s'
+                                   units[3] = 'Pa'
+                               ice/
+                                   name[1] = 'alpha'
+                                   name[2] = 'csurf'
+                                   name[3] = 'sc_no'
+                                   long_name[1] = 'Solubility w.r.t. atmosphere'
+                                   long_name[2] = 'Ocean concentration'
+                                   long_name[3] = 'Schmidt number'
+                                   units[1] = 'mol/m^3/atm'
+                                   units[2] = 'mol/m^3'
+                                   units[3] = 'dimensionless'
+                               flux/
+                                    name[1] = 'flux'
+                                    name[2] = 'deltap'
+                                    name[3] = 'kw'
+                                    long_name[1] = 'Surface flux'
+                                    long_name[2] = 'Ocean-air delta pressure'
+                                    long_name[3] = 'Piston velocity'
+                                    units[1] = 'mol/m^2/s'
+                                    units[2] = 'uatm'
+                                    units[3] = 'm/s'
+      air_sea_gas_flux/
+                       implementation/
+                                      ocmip2/
+                                             num_parameters = 2
+                                      ocmip2_data/
+                                                  num_parameters = 2
+                                      linear/
+                                             num_parameters = 3
+                       num_flags = 0
+                       use_atm_pressure = T
+                       use_10m_wind_speed = T
+                       pass_through_ice = F
+                       atm/
+                           name[1] = 'pcair'
+                           name[2] = 'u10'
+                           name[3] = 'psurf'
+                           long_name[1] = 'Atmospheric concentration'
+                           long_name[2] = 'Wind speed at 10 m'
+                           long_name[3] = 'Surface atmospheric pressure'
+                           units[1] = 'mol/mol'
+                           units[2] = 'm/s'
+                           units[3] = 'Pa'
+                       ice/
+                           name[1] = 'alpha'
+                           name[2] = 'csurf'
+                           long_name[1] = 'Solubility from atmosphere times Schmidt number term'
+                           long_name[2] = 'Ocean concentration times Schmidt number term'
+                           units[1] = 'mol/m^3/atm'
+                           units[2] = 'mol/m^3'
+                       flux/
+                            name = 'flux'
+                            long_name = 'Surface flux'
+                            units = 'mol/m^2/s'
+      air_sea_deposition/
+                         implementation/
+                                        dry/
+                                            num_parameters = 1
+                                        wet/
+                                            num_parameters = 1
+                         num_flags = 0
+                         use_atm_pressure = F
+                         use_10m_wind_speed = F
+                         pass_through_ice = T
+                         atm/
+                             name = 'deposition'
+                             long_name = 'Atmospheric deposition'
+                             units = 'kg/m^2/s'
+                         ice/
+                             name = NULL
+                             long_name = NULL
+                             units = NULL
+                         flux/
+                              name = 'flux'
+                              long_name = 'Surface deposition'
+                              units = 'mol/m^2/s'
+      land_sea_runoff/
+                      implementation/
+                                     river/
+                                           num_parameters = 1
+                      num_flags = 0
+                      use_atm_pressure = F
+                      use_10m_wind_speed = F
+                      pass_through_ice = T
+                      atm/
+                          name = 'runoff'
+                          long_name = 'Concentration in land runoff'
+                          units = 'mol/m^3'
+                      ice/
+                          name = NULL
+                          long_name = NULL
+                          units = NULL
+                      flux/
+                           name = 'flux'
+                           long_name = 'Concentration in land runoff'
+                           units = 'mol/m^3'
+
+                                                      ======== STARTING MOM4 INITIALIZATION ========
+
+  
+ ==>NOTE: Using dynamically allocated array option in mom4
+
+
+ &OCEAN_MODEL_NML
+ TIME_TENDENCY   = twolevel                        ,
+ IMPOSE_INIT_FROM_RESTART        = F,
+ REINITIALIZE_THICKNESS  = F,
+ BAROCLINIC_SPLIT        =           1,
+ BAROTROPIC_SPLIT        =          80,
+ SURFACE_HEIGHT_SPLIT    =           1,
+ LAYOUT  =           5,          10,
+ IO_LAYOUT       =           1,           5,
+ DEBUG   = F,
+ VERTICAL_COORDINATE     = geopotential                    ,
+ DT_OCEAN        =        7200,
+ CMIP_UNITS      = F
+ /
+
+ ==>Note: Running mom4 using    50 computer processors.
+
+  
+ ==>Note: Running mom4 with staggered twotime level scheme to compute time tende
+ ncies.
+          This is the default. Mass/volume and tracer are conserved with this sc
+ heme.
+  
+
+ ==>Note: Time%Time_init = time stamp at very start of the mom4 experiment is given by
+yyyy/mm/dd hh:mm:ss =    1/ 1/ 1  0: 0: 0
+
+ ==>Note: Time%model_time = time stamp at start of this leg of the mom4 experiment is
+yyyy/mm/dd hh:mm:ss =    1/ 1/ 1  0: 0: 0
+
+ ==>Note: Time%init=.true. =>mom4 will start from user specified initial conditions.
+
+ ==> Note: time steps (seconds) used for mom4
+  dtts  (tracer)                            =    7200.00
+  dtuv  (baroclinic)                        =    7200.00
+  dteta (surface height or bottom pressure) =    7200.00
+  dtbt  (barotropic)                        =      90.00
+
+ ==> Note: The velocity equations will be split into baroclinic and barotropic pieces.
+
+
+  ==> Note: Using mom4 with geopotential vertical coordinate.
+      Beware of vanishing top model grid cells. 
+
+     The equations are Boussinesq, and so conserve volume rather than mass.
+     Use one of the pressure-like coordinates to get non-Boussinesq effects.
+
+
+
+ &OCEAN_GRIDS_NML
+ DEBUG_THIS_MODULE       = T,
+ VERBOSE_INIT    = T,
+ READ_RHO0_PROFILE       = F,
+ WRITE_GRID      = F
+ /
+ ncnst=           4  num_prog=           4  pnats=           0  num_family=
+           0
+ ==>Note from ocean_grids_mod(set_ocean_grid_size): read grid from mosaic versio
+ n grid
+ FV Core Arrays. domain decomposition
+whalo =    0, ehalo =    0, shalo =    3, nhalo =    3
+  X-AXIS =   72  72
+  Y-AXIS =    3   3   3   3   3   3   3   3   3   3   3   3   3   3   3   3   3   3   3   3   3   3   3   3
+              3   3   3   3   3   3
+MPP_PSET_CREATE creating PSETs... npset=     2
+MPP_PSET_CREATE: setting stacksize= 1000000
+
+FATAL from PE    5: MPP_SET_CURRENT_PELIST: pe must be in pelist.
+
+Abort(1) on node 5 (rank 5 in comm 0): application called MPI_Abort(MPI_COMM_WORLD, 1) - process 5
+
+FATAL from PE    7: MPP_SET_CURRENT_PELIST: pe must be in pelist.
+
+Abort(1) on node 7 (rank 7 in comm 0): application called MPI_Abort(MPI_COMM_WORLD, 1) - process 7
+
+FATAL from PE   19: MPP_SET_CURRENT_PELIST: pe must be in pelist.
+
+Abort(1) on node 19 (rank 19 in comm 0): application called MPI_Abort(MPI_COMM_WORLD, 1) - process 19
+
+FATAL from PE   23: MPP_SET_CURRENT_PELIST: pe must be in pelist.
+
+Abort(1) on node 23 (rank 23 in comm 0): application called MPI_Abort(MPI_COMM_WORLD, 1) - process 23
+
+FATAL from PE   29: MPP_SET_CURRENT_PELIST: pe must be in pelist.
+
+Abort(1) on node 29 (rank 29 in comm 0): application called MPI_Abort(MPI_COMM_WORLD, 1) - process 29
+
+FATAL from PE    1: MPP_SET_CURRENT_PELIST: pe must be in pelist.
+
+Abort(1) on node 1 (rank 1 in comm 0): application called MPI_Abort(MPI_COMM_WORLD, 1) - process 1
+
+FATAL from PE    3: MPP_SET_CURRENT_PELIST: pe must be in pelist.
+
+Abort(1) on node 3 (rank 3 in comm 0): application called MPI_Abort(MPI_COMM_WORLD, 1) - process 3
+
+FATAL from PE    9: MPP_SET_CURRENT_PELIST: pe must be in pelist.
+
+Abort(1) on node 9 (rank 9 in comm 0): application called MPI_Abort(MPI_COMM_WORLD, 1) - process 9
+
+FATAL from PE   13: MPP_SET_CURRENT_PELIST: pe must be in pelist.
+
+Abort(1) on node 13 (rank 13 in comm 0): application called MPI_Abort(MPI_COMM_WORLD, 1) - process 13
+
+FATAL from PE   17: MPP_SET_CURRENT_PELIST: pe must be in pelist.
+
+Abort(1) on node 17 (rank 17 in comm 0): application called MPI_Abort(MPI_COMM_WORLD, 1) - process 17
+
+FATAL from PE   21: MPP_SET_CURRENT_PELIST: pe must be in pelist.
+
+Abort(1) on node 21 (rank 21 in comm 0): application called MPI_Abort(MPI_COMM_WORLD, 1) - process 21
+
+FATAL from PE   25: MPP_SET_CURRENT_PELIST: pe must be in pelist.
+
+Abort(1) on node 25 (rank 25 in comm 0): application called MPI_Abort(MPI_COMM_WORLD, 1) - process 25
+
+FATAL from PE   27: MPP_SET_CURRENT_PELIST: pe must be in pelist.
+
+Abort(1) on node 27 (rank 27 in comm 0): application called MPI_Abort(MPI_COMM_WORLD, 1) - process 27
+
+FATAL from PE   31: MPP_SET_CURRENT_PELIST: pe must be in pelist.
+
+Abort(1) on node 31 (rank 31 in comm 0): application called MPI_Abort(MPI_COMM_WORLD, 1) - process 31
+
+FATAL from PE   35: MPP_SET_CURRENT_PELIST: pe must be in pelist.
+
+Abort(1) on node 35 (rank 35 in comm 0): application called MPI_Abort(MPI_COMM_WORLD, 1) - process 35
+
+FATAL from PE   37: MPP_SET_CURRENT_PELIST: pe must be in pelist.
+
+Abort(1) on node 37 (rank 37 in comm 0): application called MPI_Abort(MPI_COMM_WORLD, 1) - process 37
+
+FATAL from PE   39: MPP_SET_CURRENT_PELIST: pe must be in pelist.
+
+Abort(1) on node 39 (rank 39 in comm 0): application called MPI_Abort(MPI_COMM_WORLD, 1) - process 39
+
+FATAL from PE   41: MPP_SET_CURRENT_PELIST: pe must be in pelist.
+
+Abort(1) on node 41 (rank 41 in comm 0): application called MPI_Abort(MPI_COMM_WORLD, 1) - process 41
+
+FATAL from PE   43: MPP_SET_CURRENT_PELIST: pe must be in pelist.
+
+Abort(1) on node 43 (rank 43 in comm 0): application called MPI_Abort(MPI_COMM_WORLD, 1) - process 43
+
+FATAL from PE   49: MPP_SET_CURRENT_PELIST: pe must be in pelist.
+
+Abort(1) on node 49 (rank 49 in comm 0): application called MPI_Abort(MPI_COMM_WORLD, 1) - process 49
+
+FATAL from PE   51: MPP_SET_CURRENT_PELIST: pe must be in pelist.
+
+Abort(1) on node 51 (rank 51 in comm 0): application called MPI_Abort(MPI_COMM_WORLD, 1) - process 51
+
+FATAL from PE   53: MPP_SET_CURRENT_PELIST: pe must be in pelist.
+
+Abort(1) on node 53 (rank 53 in comm 0): application called MPI_Abort(MPI_COMM_WORLD, 1) - process 53
+
+FATAL from PE   55: MPP_SET_CURRENT_PELIST: pe must be in pelist.
+
+Abort(1) on node 55 (rank 55 in comm 0): application called MPI_Abort(MPI_COMM_WORLD, 1) - process 55
+
+FATAL from PE   57: MPP_SET_CURRENT_PELIST: pe must be in pelist.
+
+Abort(1) on node 57 (rank 57 in comm 0): application called MPI_Abort(MPI_COMM_WORLD, 1) - process 57
+
+FATAL from PE   11: MPP_SET_CURRENT_PELIST: pe must be in pelist.
+
+Abort(1) on node 11 (rank 11 in comm 0): application called MPI_Abort(MPI_COMM_WORLD, 1) - process 11
+
+FATAL from PE   15: MPP_SET_CURRENT_PELIST: pe must be in pelist.
+
+Abort(1) on node 15 (rank 15 in comm 0): application called MPI_Abort(MPI_COMM_WORLD, 1) - process 15
+
+FATAL from PE   45: MPP_SET_CURRENT_PELIST: pe must be in pelist.
+
+Abort(1) on node 45 (rank 45 in comm 0): application called MPI_Abort(MPI_COMM_WORLD, 1) - process 45
+
+FATAL from PE   47: MPP_SET_CURRENT_PELIST: pe must be in pelist.
+
+Abort(1) on node 47 (rank 47 in comm 0): application called MPI_Abort(MPI_COMM_WORLD, 1) - process 47
+
+FATAL from PE   59: MPP_SET_CURRENT_PELIST: pe must be in pelist.
+
+Abort(1) on node 59 (rank 59 in comm 0): application called MPI_Abort(MPI_COMM_WORLD, 1) - process 59
+ MPI-1 is used within mod_comm
+
+FATAL from PE   33: MPP_SET_CURRENT_PELIST: pe must be in pelist.
+
+Abort(1) on node 33 (rank 33 in comm 0): application called MPI_Abort(MPI_COMM_WORLD, 1) - process 33
+slurmstepd: error: *** STEP 423532.0 ON tiger-g05c1n1 CANCELLED AT 2025-01-19T17:48:20 ***
+srun: Job step aborted: Waiting up to 47 seconds for job step to finish.
+srun: error: tiger-g05c1n1: tasks 0,2,4,6,8,10,12,14,16,18,20,22,24,26,28,30,32,34,36,38,40,42,44,46,48,50,52,54,56,58,60-109: Killed
+srun: Terminating StepId=423532.0
+srun: error: tiger-g05c1n1: tasks 1,3,5,7,9,11,13,15,17,19,21,23,25,27,29,31,33,35,37,39,41,43,45,47,49,51,53,55,57,59: Exited with exit code 1
+if ( 137 != 0 ) then
+echo Error in execution of /scratch/gpfs/GEOCLIM/wenchang/tiger3/CM2.1/work/test_CTL1860_tiger3_intelmpi_24_110PE/fms_CM2.1p1_dynamic.x
+Error in execution of /scratch/gpfs/GEOCLIM/wenchang/tiger3/CM2.1/work/test_CTL1860_tiger3_intelmpi_24_110PE/fms_CM2.1p1_dynamic.x
+exit 1
